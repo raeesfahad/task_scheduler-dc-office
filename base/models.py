@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 PRIORITY_CHOICES = (
@@ -9,6 +10,7 @@ PRIORITY_CHOICES = (
     
 
 class Task(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username')
     subject = models.CharField(max_length=50)
     notes = models.CharField(max_length=300)
     assigned_to = models.CharField(max_length=50)
@@ -21,7 +23,4 @@ class Task(models.Model):
 
     def __str__(self):
         return self.subject
-
-    def get_absolute_url(self):
-        return reverse("_detail", kwargs={"pk": self.pk})
 

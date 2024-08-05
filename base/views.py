@@ -32,7 +32,7 @@ def index(request):
         due_date = request.POST.get('due_date')
         priority = request.POST.get('priority')
         notes = request.POST.get('notes')
-        task = Task(subject=subject, assigned_to=assigned_to, due_date=due_date, priority=priority, notes=notes, is_completed=False)
+        task = Task(user=request.user, subject=subject, assigned_to=assigned_to, due_date=due_date, priority=priority, notes=notes, is_completed=False)
         task.save()
         return render(request, 'home.html', context={"tasks" : tasks, 'choices' : choices})
 
