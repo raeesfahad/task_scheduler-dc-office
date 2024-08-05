@@ -9,7 +9,7 @@ from .models import Task
 @login_required
 def index(request):
     choices = ['low', 'medium', 'high']
-    tasks = Task.objects.all().order_by('-created')
+    tasks = Task.objects.filter(user=request.user).order_by('-created')
     page_size = 6
     page = int(request.GET.get('page', 1)) 
 
@@ -81,7 +81,7 @@ def partial_search(request):
             Q(assigned_to__icontains=search_query)
         )
     else:
-        tasks = Task.objects.all()
+        tasks = Task.objects.filter(user=request.user)
 
     return render(request, 'todos_partial.html', context={'tasks': tasks})
 
