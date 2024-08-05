@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <link href="./src/output.css" rel="stylesheet" />
+    <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Scheduler</title>
+    {% load humanize %}
+  </head>
+ <body class="">
+
+    {% block content %}
+
+    
+    {% endblock content %}
+</body>
+
+<style>
+  .date-input::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+  
+  .date-input::-webkit-inner-spin-button {
+    display: none;
+  }
+  
+  .date-input::-webkit-clear-button {
+    display: none;
+  }
+
+</style>
+
+<script>
+
+  let hamburger_button = document.getElementById('hamburger');
+  let navbar = document.getElementById('navbar')
+
+  let modal = document.getElementById('modal-bd')
+  let create_button = document.getElementById('create_button')
+  let cancel_button = document.getElementById('cancel-button')
+
+
+ 
+
+  create_button.addEventListener(
+    'click', ()=>{
+
+      if (modal.style.display === 'none') {
+        modal.style.display = 'block'; // or 'flex'
+      } else {
+        modal.style.display = 'none';
+      }
+    }
+  )
+
+  cancel_button.addEventListener(
+    'click', ()=>{
+
+      if (modal.style.display === 'none') {
+        modal.style.display = 'block'; // or 'flex'
+      } else {
+        modal.style.display = 'none';
+      }
+    }
+  )
+
+  hamburger_button.addEventListener( 'click', ()=>{
+  if (navbar.style.display === 'none') {
+    navbar.style.display = 'block'; // or 'flex'
+  } else {
+    navbar.style.display = 'none';
+  }
+})
+
+</script>
+</html>
