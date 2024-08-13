@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout as auth_logout
+from datetime import date
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -9,7 +10,7 @@ from .models import Task
 @login_required
 def index(request):
     choices = ['low', 'medium', 'high']
-    tasks = Task.objects.filter(user=request.user).order_by('-created')
+    tasks = Task.objects.filter(user=request.user).exclude(due_date__lt=date.today()).order_by('-created')
     page_size = 6
     page = int(request.GET.get('page', 1)) 
 
@@ -48,11 +49,12 @@ def completed(request):
     return render(request, 'home.html', context={"tasks" : tasks} )
 
 def urgent(request):
-    tasks = Task.objects.filter(priority='high')
+    tasks = Task.objects.filter(priority='high').exclude(due_date__lt=date.today()).order_by('-created')
     return render(request, 'home.html', context={'tasks' : tasks})
 
 def overdue(request):
-    return render(request, 'home.html')
+    tasks = Task.objects.filter(user=request.user, due_date__lt=date.today()).order_by('-created')
+    return render(request, 'home.html', context={'tasks' : tasks})
 
 def login(request):
     if request.method == "POST":
